@@ -53,7 +53,6 @@ public class Enemy : MonoBehaviour {
     }
 
     void Update () {
-
         Vector3 curr_pos = transform.position;
         //Debug.Log(Time.deltaTime);
         if ((next_pos - curr_pos).sqrMagnitude < speed * Time.deltaTime)
@@ -77,5 +76,8 @@ public class Enemy : MonoBehaviour {
 
         transform.position = Vector3.Lerp(curr_pos, next_pos, fracJourney);
 
+        Vector3 dir = next_pos - this.transform.localPosition;
+        Quaternion targetRotation = Quaternion.LookRotation(dir);
+        transform.rotation = Quaternion.Lerp(this.transform.rotation, targetRotation, Time.deltaTime * 5);
     }
 }
