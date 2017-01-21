@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-
+[RequireComponent(typeof(AudioSource))]
 public class Enemy : MonoBehaviour {
 
     public float lifeTime = 5.9f;
@@ -11,6 +11,11 @@ public class Enemy : MonoBehaviour {
     public ParticleSystem deathEffect;
     private List<Vector3> dots;
     private Vector3 next_pos;
+
+    private AudioSource aSource;
+
+    public AudioClip deathmelody;
+
 
     public float speed = 1.0F;
     private float startTime;
@@ -30,12 +35,18 @@ public class Enemy : MonoBehaviour {
         }
     }
 
+    private void Awake()
+    {
+        aSource = Camera.main.GetComponent<AudioSource>();
+    }
 
     void Start () {
 
         Vector3 spawnPosition = new Vector3(Random.Range(-19f, 19f), 0f, Random.Range(-19f, 19f));
         transform.position = spawnPosition;
         dots = new List<Vector3>();
+
+        
 
         foreach (Transform child in path.transform)
         {
@@ -48,11 +59,13 @@ public class Enemy : MonoBehaviour {
         startTime = Time.time;
         journeyLength = Vector3.Distance(transform.position, next_pos);
 
-        Shuffle(dots);
+        //Shuffle(dots);
 
     }
     private void OnDestroy()
     {
+
+        aSource.PlayOneShot(deathmelody);
 
         ParticleSystem explosionEffect = Instantiate(deathEffect) as ParticleSystem;
 
