@@ -26,6 +26,7 @@ public class Wave : MonoBehaviour {
     }
     // Update is called once per frame
     void Update () {
+
         if (!isStartSpawn) return;
         DurationNextUnit -= Time.deltaTime;
         if (DurationNextUnit < 0)
