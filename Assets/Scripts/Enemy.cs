@@ -56,7 +56,7 @@ public class Enemy : MonoBehaviour {
 
         Vector3 curr_pos = transform.position;
         //Debug.Log(Time.deltaTime);
-        if ((next_pos - curr_pos).magnitude < 9) ;
+        if ((next_pos - curr_pos).sqrMagnitude < speed * Time.deltaTime)
         {
             if (dots.Count==0)
             {
