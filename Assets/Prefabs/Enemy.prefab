@@ -20,6 +20,8 @@ GameObject:
   m_Component:
   - component: {fileID: 4526050015691950}
   - component: {fileID: 114705874971961024}
+  - component: {fileID: 114401273409650910}
+  - component: {fileID: 114912817825710964}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Untagged
@@ -276,6 +278,21 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1521600105525832}
   m_Mesh: {fileID: 4300002, guid: 8507945f1f8c02941bd1502db8ef04b7, type: 3}
+--- !u!114 &114401273409650910
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1225858105994586}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6b6c5373babfb0d42beacfd9021d99ce, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  minSpawnDistance: 30
+  maxSpawnDistance: 50
+  randomSpawn: 1
+  randomAtitude: 1
 --- !u!114 &114705874971961024
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -292,4 +309,17 @@ MonoBehaviour:
   deathEffect: {fileID: 198000012831875596, guid: 843695ef5e6d39f458b99e399ccc09b1,
     type: 2}
   deathmelody: {fileID: 8300000, guid: 873c6c86031b9da469964d356b498f28, type: 3}
-  speed: 15
+  speed: 10
+--- !u!114 &114912817825710964
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1225858105994586}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a4758c44407f05c4fba8e18108002fc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  path: {fileID: 0}
+  shuffle: 0
