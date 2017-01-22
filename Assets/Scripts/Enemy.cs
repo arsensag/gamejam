@@ -8,7 +8,7 @@ public class Enemy : MonoBehaviour {
 
     public float lifeTime = 5.9f;
     public GameObject path;
-
+    public ParticleSystem deathEffect;
     private List<Vector3> dots;
     private Vector3 next_pos;
 
@@ -51,6 +51,21 @@ public class Enemy : MonoBehaviour {
         Shuffle(dots);
 
     }
+    private void OnDestroy()
+    {
+
+        ParticleSystem explosionEffect = Instantiate(deathEffect) as ParticleSystem;
+
+        explosionEffect.transform.position = transform.position;
+
+        //play it
+        explosionEffect.loop = false;
+        explosionEffect.Play();
+
+        Destroy(explosionEffect.gameObject, explosionEffect.duration);
+
+    }
+
 
     void Update () {
         Vector3 curr_pos = transform.position;
