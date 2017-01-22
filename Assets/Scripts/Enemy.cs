@@ -16,9 +16,6 @@ public class Enemy : MonoBehaviour {
 
     private Moving moving;
 
-    private List<Vector3> dots;
-    private Vector3 next_pos;
-    private Vector3 start_pos;
     private AudioSource aSource;
 
 
@@ -27,7 +24,7 @@ public class Enemy : MonoBehaviour {
 
     void Start ()
     {
-        moving = GetComponent<PathMoving>();
+        moving = GetComponent<CircleMoving>();
 
         aSource = GetComponent<AudioSource>();
 
@@ -60,10 +57,10 @@ public class Enemy : MonoBehaviour {
         transform.position = next.Item1;
         transform.rotation = next.Item2;
 
-        if(Time.time > 30)
+        /*if(Time.time > 10)
         {
             moving = GetComponent<PathMoving>();
-        }
+        }*/
 
     }
 }

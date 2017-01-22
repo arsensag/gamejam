@@ -11,7 +11,7 @@ public class PathMoving : Moving
     public GameObject path;
     public bool shuffle;
 
-    private List<Vector3> dots;
+    public List<Vector3> dots;
     private Vector3 next_pos;
     private Vector3 start_pos;
     private Vector3 curr_pos;
@@ -23,6 +23,7 @@ public class PathMoving : Moving
 
     private Vector3 spawnPosition;
     private Enemy enemy;
+    private bool init_flag = false;
 
     public static void ShuffleFun<T>(IList<T> list)
     {
@@ -42,10 +43,9 @@ public class PathMoving : Moving
         enemy = GetComponent<Enemy>();
 
         dots = new List<Vector3>();
-
         foreach (Transform child in enemy.path.transform)
         {
-            dots.Add(child.transform.position);
+            dots.Add(child.position);
         }
 
         if (shuffle)
@@ -57,40 +57,42 @@ public class PathMoving : Moving
 
     public override Vector3 GetFirts()
     {
-        start_pos = next_pos = dots.First();
-        dots.Remove(start_pos);
+        init_flag = true;
 
+        start_pos = dots.First();
+        next_pos = dots.First();
+        dots.Remove(next_pos);
         return start_pos;
     }
 
     public override Tuple<Vector3, Quaternion> GetNext(Vector3 curr_pos)
     {
 
-        curr_pos = transform.position;
-
-        startTime = Time.time;
-        journeyLength = Vector3.Distance(curr_pos, next_pos);
-
-        
         if ((next_pos - curr_pos).magnitude <= 3)
         {
 
             if (dots.Count == 0)
             {
                 Destroy(gameObject, 0.5f);
-                Debug.Log("Destroying!!!");
 
                 //System.Tuple<Vector3, Quaternion> result2 = System.Tuple.Create(Vector3.zero, Quaternion.);
 
                 //return result2;
             }
 
-            start_pos = next_pos;
+            start_pos = curr_pos;
 
             next_pos = dots.First();
             dots.Remove(next_pos);
 
+            startTime = Time.time;
             journeyLength = Vector3.Distance(start_pos, next_pos);
+        }
+
+        if (!init_flag)
+        {
+            startTime = Time.time;
+            journeyLength = Vector3.Distance(curr_pos, next_pos);
         }
 
         float distCovered = (Time.time - startTime) * enemy.speed;
@@ -98,16 +100,13 @@ public class PathMoving : Moving
 
         Vector3 result_pos = Vector3.Lerp(start_pos, next_pos, fracJourney);
 
-        /*
         Vector3 dir = next_pos - this.transform.localPosition;
         Quaternion targetRotation2 = Quaternion.LookRotation(dir);
         Quaternion next_rotation = Quaternion.Lerp(this.transform.rotation, targetRotation2, Time.deltaTime * 5);
-        */
 
-        Quaternion next_rotation = Quaternion.LookRotation(Camera.main.transform.position);
+        //Quaternion next_rotation = Quaternion.LookRotation(Camera.main.transform.position);
 
         Tuple<Vector3, Quaternion> result = Tuple.Create(result_pos, next_rotation);
-
         return result;
 
     }
